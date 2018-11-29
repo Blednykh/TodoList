@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Button from './components/Button';
+import FiltersMenu from './components/FiltersMenu';
 import TodoItem from './components/TodoItem';
 
 const RED = "rgba(255, 0, 0, 0.16)";
@@ -32,8 +32,6 @@ class App extends React.Component {
     }
 
     deleteTodo = (index) => (event) => {
-        console.log('del event', event);
-        console.log('del index', index);
         const list = this.state.todoList;
         const visibleList =this.state.VisibleList;
         const backgroundTodoList = this.state.backgroundTodoList;
@@ -45,9 +43,11 @@ class App extends React.Component {
 
 
     handleClick = (event) => {
-        console.log('todolist', this.state.todoList);
         const list = this.state.todoList;
-        list.push({title: 'Новая задача', description: 'Введите текст задачи...', importance: 1, deadline: "ДД.ММ.ГГГГ", finishDate: "ДД.ММ.ГГГГ", deadlineTime: "ЧЧ:ММ", finishDateTime: "ЧЧ:ММ", disabledImportanceButton1: true, disabledImportanceButton2: false, disabledImportanceButton3: false,});
+        list.push({title: 'Новая задача', description: 'Введите текст задачи...',
+            importance: 1, deadline: "ДД.ММ.ГГГГ", finishDate: "ДД.ММ.ГГГГ",
+            deadlineTime: "ЧЧ:ММ", finishDateTime: "ЧЧ:ММ", disabledImportanceButton1: true,
+            disabledImportanceButton2: false, disabledImportanceButton3: false,});
 
         const visibleList = this.state.VisibleList;
         visibleList.push('inherit');
@@ -81,7 +81,6 @@ class App extends React.Component {
     }
 
     titleChangeHandle = (index) => (event) => {
-        console.log('eevent2', event);
         const list = this.state.todoList;
         list[index].title = event.target.value;
         this.setState({todoList: list})
@@ -183,7 +182,6 @@ class App extends React.Component {
     };
 
 
-    //Изменения фильтра
     filterChangeHandle = (number) => (event) =>{
         const list = this.state.todoList;
         let disabledFilterButton = this.state.disabledFilterButton;
@@ -203,11 +201,9 @@ class App extends React.Component {
         disabledFilterButton = [false,false,false,false];
         disabledFilterButton[number] = true;
         this.setState({VisibleList: visibleList, disabledFilterButton: disabledFilterButton})
-        // alert("filterChangeHandle "+"list: "+list.length+" visibleList: "+ visibleList.length)
     }
 
 
-    //Изменение описания задачи
     changeDescriptionHandle = (event) => {
 
         const list = this.state.todoList;
@@ -215,7 +211,6 @@ class App extends React.Component {
         this.setState({todoList: list})
     };
 
-    //Изменение важности задачи
     setImportance = (index,importance) => (event) =>{
     const list = this.state.todoList;
         switch (importance) {
@@ -241,7 +236,6 @@ class App extends React.Component {
         if(this.state.disabledFilterButton[0]==false)
             visibleList[index]='none';
         this.setState({todoList: list, VisibleList:  visibleList});
-        // alert("setImportance2 "+"list: "+list.length+" visibleList: "+ visibleList.length)
     }
 
 
@@ -250,8 +244,7 @@ class App extends React.Component {
         console.log('todo', todoList);
         return (
             <div className="App">
-                <Button
-                    className="AddButton"
+                <FiltersMenu
                     filterChangeHandle={this.filterChangeHandle}
                     handleButtonClick={this.handleClick}
                     disabledFilterButton = {disabledFilterButton}

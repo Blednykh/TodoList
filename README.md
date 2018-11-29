@@ -385,7 +385,7 @@ While you can still use `require()` and `module.exports`, we encourage you to us
 
 For example:
 
-### `Button.js`
+### `FiltersMenu.js`
 
 ```js
 import React, { TodoItem } from 'react';
@@ -492,11 +492,11 @@ This project setup uses [Webpack](https://webpack.js.org/) for handling all asse
 }
 ```
 
-### `Button.js`
+### `FiltersMenu.js`
 
 ```js
 import React, { TodoItem } from 'react';
-import './Button.css'; // Tell Webpack that Button.js uses these styles
+import './Button.css'; // Tell Webpack that FiltersMenu.js uses these styles
 
 class Button extends TodoItem {
   render() {
@@ -538,7 +538,7 @@ CSS Modules let you use the same CSS class name in different files without worry
 }
 ```
 
-### `Button.js`
+### `FiltersMenu.js`
 
 ```js
 import React, { TodoItem } from 'react';
