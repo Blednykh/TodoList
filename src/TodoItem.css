@@ -36,7 +36,6 @@
 }
 .ButtonBar{
     width: 30%;
-    /*background-color: lawngreen;*/
     display: flex;
     flexDirection: row;
     justify-content: flex-end;

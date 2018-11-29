@@ -1,28 +1,38 @@
 import React from 'react';
 import '../FiltersMenu.css';
-import img from '../agutin_min.jpg';
 
-const styles = {
-    container: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'justify'
-    }
-};
+
+const buttonNameList = ["Все","Обычные","Важные","Очень важные"];
+
+
 
 class FiltersMenu extends React.Component {
-    render() {
-        const {handleButtonClick, buttonContent = 'Добавить задачу',disabledFilterButton} = this.props;
 
+    setDisabledButton = (enableFilter) =>{
+        let buttonList = [];
+        let isDisabled;
+        for(let i=0;i<buttonNameList.length;i++){
+            isDisabled=(i==enableFilter);
+            buttonList.push(<button disabled={isDisabled} onClick={this.props.filterChangeHandle(i)}>{buttonNameList[i]}</button>)
+        }
+        return buttonList;
+
+    };
+
+
+    render() {
+        const {filterChangeHandle,enableFilter} = this.props;
+        let buttonList = this.setDisabledButton(enableFilter);
         return (
-            <div style={styles.container}>
-                <img src={img} className="Img"/>
-                <button className="AddButton" onClick={handleButtonClick}>{buttonContent}</button>
+            <div>
                 <div className="Bar">
-                    <button disabled={disabledFilterButton[0]} onClick={this.props.filterChangeHandle(0)}>Все</button>
-                    <button disabled={disabledFilterButton[1]} onClick={this.props.filterChangeHandle(1)}>Обычные</button>
-                    <button disabled={disabledFilterButton[2]} onClick={this.props.filterChangeHandle(2)}>Важные</button>
-                    <button disabled={disabledFilterButton[3]} onClick={this.props.filterChangeHandle(3)}>Очень важные</button>
+                    {buttonList.map((element) =>
+                        element
+                       )}
+                    {/*<button disabled={disabledFilterButton[0]} onClick={filterChangeHandle(0)}>Все</button>
+                    <button disabled={disabledFilterButton[1]} onClick={filterChangeHandle(1)}>Обычные</button>
+                    <button disabled={disabledFilterButton[2]} onClick={filterChangeHandle(2)}>Важные</button>
+                    <button disabled={disabledFilterButton[3]} onClick={filterChangeHandle(3)}>Очень важные</button>*/}
                 </div>
                 <hr/>
             </div>

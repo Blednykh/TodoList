@@ -2,6 +2,8 @@ import React from 'react';
 import './App.css';
 import FiltersMenu from './components/FiltersMenu';
 import TodoItem from './components/TodoItem';
+import img from "./agutin_min.jpg";
+
 
 const RED = "rgba(255, 0, 0, 0.16)";
 const GREEN = "rgba(124, 252, 0, 0.34)";
@@ -12,8 +14,8 @@ class App extends React.Component {
     state = {
         todoList: [],
         VisibleList: [],
-        disabledFilterButton: [true,false,false,false],
         backgroundTodoList: [],
+        enableFilter: 0,
     };
 
     componentDidUpdate(){
@@ -46,8 +48,7 @@ class App extends React.Component {
         const list = this.state.todoList;
         list.push({title: 'Новая задача', description: 'Введите текст задачи...',
             importance: 1, deadline: "ДД.ММ.ГГГГ", finishDate: "ДД.ММ.ГГГГ",
-            deadlineTime: "ЧЧ:ММ", finishDateTime: "ЧЧ:ММ", disabledImportanceButton1: true,
-            disabledImportanceButton2: false, disabledImportanceButton3: false,});
+            deadlineTime: "ЧЧ:ММ", finishDateTime: "ЧЧ:ММ"});
 
         const visibleList = this.state.VisibleList;
         visibleList.push('inherit');
@@ -184,9 +185,8 @@ class App extends React.Component {
 
     filterChangeHandle = (number) => (event) =>{
         const list = this.state.todoList;
-        let disabledFilterButton = this.state.disabledFilterButton;
         let visibleList = this.state.VisibleList;
-
+        let enableFilter = this.state.enableFilter;
         visibleList = list.map(function (elem) {
             if(number == 0)
                 return "inherit";
@@ -198,9 +198,8 @@ class App extends React.Component {
                 return "none";
         })
 
-        disabledFilterButton = [false,false,false,false];
-        disabledFilterButton[number] = true;
-        this.setState({VisibleList: visibleList, disabledFilterButton: disabledFilterButton})
+        enableFilter = number;
+        this.setState({VisibleList: visibleList, enableFilter})
     }
 
 
@@ -213,41 +212,26 @@ class App extends React.Component {
 
     setImportance = (index,importance) => (event) =>{
     const list = this.state.todoList;
-        switch (importance) {
-            case 1:
-                list[index].disabledImportanceButton1 = true;
-                list[index].disabledImportanceButton2 = false;
-                list[index].disabledImportanceButton3 = false;
-                list[index].importance = importance;
-                break;
-            case 2:
-                list[index].disabledImportanceButton1 = false;
-                list[index].disabledImportanceButton2 = true;
-                list[index].disabledImportanceButton3 = false;
-                list[index].importance = importance;
-                break;
-            case 3:
-                list[index].disabledImportanceButton1 = false;
-                list[index].disabledImportanceButton2 = false;
-                list[index].disabledImportanceButton3 = true;
-                list[index].importance = importance;
-        }
+        list[index].importance = importance;
         const visibleList = this.state.VisibleList;
-        if(this.state.disabledFilterButton[0]==false)
+        if(importance!=this.state.enableFilter && this.state.enableFilter!=0)
             visibleList[index]='none';
         this.setState({todoList: list, VisibleList:  visibleList});
     }
 
 
     render() {
-        const {todoList, VisibleList, disabledFilterButton, backgroundTodoList} = this.state;
+        const {todoList, VisibleList, backgroundTodoList, enableFilter} = this.state;
         console.log('todo', todoList);
         return (
             <div className="App">
+                <div className="Button">
+                    <img src={img} className="Img"/>
+                    <button className="AddButton" onClick={this.handleClick}>Добавить задачу</button>
+                </div>
                 <FiltersMenu
                     filterChangeHandle={this.filterChangeHandle}
-                    handleButtonClick={this.handleClick}
-                    disabledFilterButton = {disabledFilterButton}
+                    enableFilter = {enableFilter}
                 />
                 {todoList.map((element, index) =>
                     <TodoItem

@@ -1,6 +1,9 @@
 import React from 'react';
 import '../TodoItem.css'
 
+const buttonNameList = ["Обычная","Важная","Очень важная"];
+
+
 class TodoItem extends React.Component {
 
     state = {
@@ -18,9 +21,20 @@ class TodoItem extends React.Component {
         this.props.changeDescriptionHandle({value, index: this.props.index})
     };
 
+    setDisabledButton = (importance) =>{
+        let buttonList = [];
+        let isDisabled;
+        for(let i=1;i<buttonNameList.length+1;i++){
+            isDisabled=(i==importance);
+            buttonList.push(<button disabled={isDisabled} onClick={this.props.setImportance(this.props.index,i)}>{buttonNameList[i-1]}</button>)
+        }
+        return buttonList;
+
+    };
+
     render() {
         const {disabled} = this.state;
-
+        let buttonList = this.setDisabledButton(this.props.importance);
         return (
             <div className="Todo" style={{background: this.props.backgroundTodoList[this.props.index], display: this.props.VisibleList[this.props.index]}}>
                 <div className="TodoContent">
@@ -30,9 +44,10 @@ class TodoItem extends React.Component {
                     <div style={{display: 'flex', flexDirection: 'row', align_items: 'center'}}>
                         <div className="Text">Важность задачи:</div>
                         {/*<div className="ButtonBar">*/}
-                            <button disabled={this.props.element.disabledImportanceButton1} onClick={this.props.setImportance(this.props.index,1)}>Обычная</button>
+                        {buttonList}
+                            {/*<button disabled={this.props.element.disabledImportanceButton1} onClick={this.props.setImportance(this.props.index,1)}>Обычная</button>
                             <button disabled={this.props.element.disabledImportanceButton2} onClick={this.props.setImportance(this.props.index,2)}>Важная</button>
-                            <button disabled={this.props.element.disabledImportanceButton3} onClick={this.props.setImportance(this.props.index,3)}>Очень важная</button>
+                            <button disabled={this.props.element.disabledImportanceButton3} onClick={this.props.setImportance(this.props.index,3)}>Очень важная</button>*/}
                         {/*</div>*/}
                     </div>
                     <div className="Time">
