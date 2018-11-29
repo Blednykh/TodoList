@@ -21,7 +21,7 @@ class FiltersMenu extends React.Component {
 
 
     render() {
-        const {filterChangeHandle,enableFilter} = this.props;
+        const {enableFilter} = this.props;
         let buttonList = this.setDisabledButton(enableFilter);
         return (
             <div>
@@ -29,10 +29,6 @@ class FiltersMenu extends React.Component {
                     {buttonList.map((element) =>
                         element
                        )}
-                    {/*<button disabled={disabledFilterButton[0]} onClick={filterChangeHandle(0)}>Все</button>
-                    <button disabled={disabledFilterButton[1]} onClick={filterChangeHandle(1)}>Обычные</button>
-                    <button disabled={disabledFilterButton[2]} onClick={filterChangeHandle(2)}>Важные</button>
-                    <button disabled={disabledFilterButton[3]} onClick={filterChangeHandle(3)}>Очень важные</button>*/}
                 </div>
                 <hr/>
             </div>
